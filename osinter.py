@@ -3,9 +3,10 @@ import sys
 import json
 import requests
 import censys.certificates
-import zoomeye
+#import zoomeye
 import robtex_python
 import linkedin
+import urllib
 
 
 
@@ -35,34 +36,24 @@ print("--------------------------------| CENSYS RESULTS |-----------------------
 res = requests.get(API_URL + "/" + str(input_search), auth=(UID, SECRET))
 if res.status_code != 200:
     try:
-        print("error occurred: %s" % res.json()["error"])
-        sys.exit(1)
         for name, series in res.json()["raw_series"].iteritems():
             print(series["name"], "was last updated at", series["latest_result"]["timestamp"])
     except:
         pass
 
-    #----CERTIFICATES----
-"""
-UID = "8d439ff9-7b2c-46cc-af3b-350a0077a15f"
-SECRET = "ySzM6ohyVtXcFRpcXopbdDGs9S3q3tkJ"
-
-certificates = censys.certificates.CensysCertificates(UID, SECRET)
-fields = ["parsed.subject_dn", "parsed.fingerprint_sha256", "parsed.fingerprint_sha1"]
-
-for c in certificates.search("validation.nss.valid: true", fields=fields):
-    print(c["parsed.subject_dn"])
-"""
-
 print("----------------------------------| ROBTEX RESULTS |----------------------------------")
 print("'''''''''''printing pdns forward results...''''''''''''''''")
 response = robtex_python.pdns_forward(input_search)
+print(response)
 print("''''''''''printing IP of the search'''''''''''")
 responseip = robtex_python.ip_query(input_search)
+print(responseip)
 print("''''''''''printing AS of the search'''''''''''")
 responseas = robtex_python.as_query(input_search)
+print(responseas)
 print("''''''''''printing PDNS REVERSE of the search'''''''''''")
 responsepdnsreverse = robtex_python.pdns_reverse(input_search)
+print(responsepdnsreverse)
 
 
 
@@ -84,54 +75,20 @@ responsepdnsreverse = robtex_python.pdns_reverse(input_search)
 
 """
 
-"""
-FULL CONTACT
 
-APIkey: wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO
+#FULL CONTACT
+
+print("--------------------------------FULL CONTACT------------------------------")
+
+APIkey:"wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO"
 
 
-req = urllib.request.Request('https://api.fullcontact.com/v3/<search>')
+req = urllib.request.Request('https://api.fullcontact.com/v3/'+input_search)
 req.add_header('Authorization', 'Bearer {wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO}')
-data = json.dumps({
-  "emails": [
-    "bart@fullcontact.com",
-    "bart.lorang@fullcontact.com"
-  ],
-  "phones": [
-    "+17202227799",
-    "+13035551234"
-  ],
-  "location": {
-    "addressLine1": "123 Main Street",
-    "addressLine2": "Unit 2",
-    "city": "Denver",
-    "region": "Colorado",
-    "regionCode": "CO",
-    "postalCode": "80203"
-  },
-  "name": {
-    "full": "Bart Lorang",
-    "given": "Bart",
-    "family": "Lorang"
-  },
-  "profiles": [{
-    "service": "twitter",
-    "username": "bartlorang"
-    }, {
-    "service": "twitter",
-    "userid": "5998422"
-    }, {
-    "service": "linkedin",
-    "url": "https://www.linkedin.com/in/bartlorang"
-    }, {
-    "service": "github",
-    "url": "https://www.github.com/lorangb"
-  }]
-})
+data = json.dumps([])
+response = urllib.request.urlopen(req)
 
-response = urllib.request.urlopen(req,data)
 
-"""
 
 """
 LINKEDIN
