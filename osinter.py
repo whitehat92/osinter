@@ -7,6 +7,7 @@ import censys.certificates
 import robtex_python
 import linkedin
 import urllib
+import webbrowser
 
 
 
@@ -56,7 +57,12 @@ responsepdnsreverse = robtex_python.pdns_reverse(input_search)
 print(responsepdnsreverse)
 
 
+print("-------------------------- ZOOMEYE SEARCH ------------------------------")
+print("-------------------------- Browser OPENED --------------------------------")
+webbrowser.open_new('https://www.zoomeye.org/searchResult?q=' + input_search)
 
+print("----------------------------------- SYNC ME SEARCH -------------------------------------------")
+webbrowser.open_new('https://sync.me/search/?number=' + input_search)
 """
 #ZOOMEYE
 
@@ -83,8 +89,8 @@ print("--------------------------------FULL CONTACT-----------------------------
 APIkey:"wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO"
 
 
-req = urllib.request.Request('https://api.fullcontact.com/v3/'+input_search)
-req.add_header('Authorization', 'Bearer {wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO}')
+req = urllib.request.Request('https://api.fullcontact.com/v3/'+input_search, method='post')
+req.add_header('Authorization', 'Bearer wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO ')
 data = json.dumps([])
 response = urllib.request.urlopen(req)
 
@@ -107,5 +113,16 @@ application.get_profile()
 
 GET https://api.linkedin.com/v2/{service}
 
+"""
 
+"""
+--- Services
+SYNC ME
+spokeo
+google
+bing
+pastebin
+tello
+bgp
+arin
 """
