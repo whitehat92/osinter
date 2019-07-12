@@ -8,15 +8,16 @@ import robtex_python
 import linkedin
 import urllib
 import webbrowser
+import os
 
 
 
-api_key = "YFJ1LyOqk5KEAvxIiulVBOoPqbVMFHR5"
-shodan_api = shodan.Shodan(api_key)
 
 input_search = input("What do you want to search? ")
 
 # Search Shodan
+api_key = "YFJ1LyOqk5KEAvxIiulVBOoPqbVMFHR5"
+shodan_api = shodan.Shodan(api_key)
 results = shodan_api.search(input_search)
 
     # Show the results
@@ -57,12 +58,7 @@ responsepdnsreverse = robtex_python.pdns_reverse(input_search)
 print(responsepdnsreverse)
 
 
-print("-------------------------- ZOOMEYE SEARCH ------------------------------")
-print("-------------------------- Browser OPENED --------------------------------")
-webbrowser.open_new('https://www.zoomeye.org/searchResult?q=' + input_search)
 
-print("----------------------------------- SYNC ME SEARCH -------------------------------------------")
-webbrowser.open_new('https://sync.me/search/?number=' + input_search)
 """
 #ZOOMEYE
 
@@ -88,14 +84,15 @@ print("--------------------------------FULL CONTACT-----------------------------
 
 APIkey:"wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO"
 
+try:
+    req = urllib.request.Request('https://api.fullcontact.com/v3/'+input_search, method='post')
+    req.add_header('Authorization', 'Bearer wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO ')
+    data = json.dumps([])
+    response = urllib.request.urlopen(req)
+except:
+    pass
 
-req = urllib.request.Request('https://api.fullcontact.com/v3/'+input_search, method='post')
-req.add_header('Authorization', 'Bearer wpSJrr7wVZNEnD6zFjRkUMFo5ijajWRO ')
-data = json.dumps([])
-response = urllib.request.urlopen(req)
-
-
-
+print("----------------------------- LINKEDIN DATA ---------------------------------")
 """
 LINKEDIN
 
@@ -114,7 +111,31 @@ application.get_profile()
 GET https://api.linkedin.com/v2/{service}
 
 """
+print("--------------------------------- FACEBOOK DATA ----------------------------")
+token = "EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD"
+fb_request_private = requests.get("https://graph.facebook.com/v2.9/search?q=" + input_search + "&type=user&access_token=" + token)
+print(fb_request_private)
+fb_request_public = requests.get("https://facebook.com/public/" + input_search)
+print(fb_request_public.headers)
+fb_just_me = requests.get("https://graph.facebook.com/v3.3/me?fields=id%2Cname%2Cphotos&access_token=EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD").text
+fb_just_me
+fb_searchbycurl = os.system("C:/Users/Antonio/Desktop/curl/curl.exe -X GET" + " " + "https://graph.facebook.com/v3.3/me?fields=id%2Cname%2Cphotos&access_token=EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD")
+fb_searchbycurl
 
+browseropener = input("Do you want to open the browser for the rest of the search engines? (y/n) ")
+if browseropener == "y":
+    print("-------------------------- ZOOMEYE opening browser ------------------------------")
+    webbrowser.open_new('https://www.zoomeye.org/searchResult?q=' + input_search)
+    print(
+        "----------------------------------- SYNC ME opening browser! -------------------------------------------")
+    webbrowser.open_new('https://sync.me/search/?number=' + input_search)
+    print("----------------------------- TALOS INTELLIGENCE -----------------------------")
+    webbrowser.open_new("https://talosintelligence.com/reputation_center/lookup?search=" + input_search)
+    print("------------------------- PASTEBIN SEARCH -------------------------")
+    webbrowser.open_new("https://pastebin.com/search?q=" + input_search)
+
+else:
+    pass
 """
 --- Services
 SYNC ME
@@ -126,3 +147,4 @@ tello
 bgp
 arin
 """
+
