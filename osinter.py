@@ -10,6 +10,8 @@ import urllib
 import webbrowser
 import os
 from github import Github
+import socket
+from pybinaryedge import BinaryEdge
 
 
 
@@ -29,6 +31,15 @@ for result in results['matches']:
     print(result['data'])
     print('')
 
+print("--------------------------------- BINARY EDGE SEARCH RESULTS ||||||||| NEED TOKEN FIRST ------------------------------------------")
+
+
+#be = BinaryEdge(API_KEY)
+# Iterate over the first page of IPs having specific ssh configuration
+#search = 'ssh.algorithms.encryption.keyword:"aes256-cbc" ssh.banner.keyword:"SSH-2.0-OpenSSH_LeadSec"'
+#results = be.host_search(search)
+#for ip in results['events']:
+ #   print("%s" %(ip['target']['ip']))
 
     #CENSYS
 API_URL = "https://censys.io/api/v1"
@@ -126,11 +137,11 @@ fb_searchbycurl
 print("-------------------------------------- GITHUB API ---------------------------------")
 g = Github("2db60eef1c76f94005cb204b12207958b71fe3ee ")
 
-for repo in g.get_repos():
-    print(repo.name)
+#for repo in g.get_repos():
+ #   print(repo.name)
 
 browseropener = input("Do you want to open the browser for the rest of the search engines? (y/n) ")
-if browseropener == "y":
+if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("-------------------------- ZOOMEYE opening browser ------------------------------")
     webbrowser.open_new('https://www.zoomeye.org/searchResult?q=' + input_search)
     print(
@@ -148,6 +159,9 @@ if browseropener == "y":
     webbrowser.open_new("https://facebook.com/public/" + input_search)
     print("------------------------------------- GITHUB SEARCH -------------------------------------")
     webbrowser.open_new("https://github.com/search?q=" + input_search)
+    print("-------------------------------------- ONYPHE SEARCH ------------------------------------")
+    puthere = socket.gethostbyname(str(input_search))
+    webbrowser.open_new("https://www.onyphe.io/search/?query=" + puthere)
 
 
 else:
@@ -162,5 +176,13 @@ pastebin
 tello
 bgp
 arin
+
+viz.graynoise.io/table
+fofa.so
+onyphe.io
+app.binaryedge.io
+hunter.io
+wigle.net
+ghostproject.fr
 """
 
