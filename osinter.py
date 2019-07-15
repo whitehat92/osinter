@@ -9,6 +9,7 @@ import linkedin
 import urllib
 import webbrowser
 import os
+from github import Github
 
 
 
@@ -122,6 +123,12 @@ fb_just_me
 fb_searchbycurl = os.system("C:/Users/Antonio/Desktop/curl/curl.exe -X GET" + " " + "https://graph.facebook.com/v3.3/me?fields=id%2Cname%2Cphotos&access_token=EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD")
 fb_searchbycurl
 
+print("-------------------------------------- GITHUB API ---------------------------------")
+g = Github("2db60eef1c76f94005cb204b12207958b71fe3ee ")
+
+for repo in g.get_repos():
+    print(repo.name)
+
 browseropener = input("Do you want to open the browser for the rest of the search engines? (y/n) ")
 if browseropener == "y":
     print("-------------------------- ZOOMEYE opening browser ------------------------------")
@@ -133,6 +140,15 @@ if browseropener == "y":
     webbrowser.open_new("https://talosintelligence.com/reputation_center/lookup?search=" + input_search)
     print("------------------------- PASTEBIN SEARCH -------------------------")
     webbrowser.open_new("https://pastebin.com/search?q=" + input_search)
+    print("------------------------------CENSYS SEARCH RESULTS -------------------------------")
+    webbrowser.open_new("https://censys.io/ipv4?q=" + input_search)
+    print("----------------------------- BGP HURRICANE ELECTRIC INTERNET SERVICES ---------------------------------")
+    webbrowser.open_new("https://bgp.he.net/dns/" + input_search + "#_dns")
+    print("-------------------------------- PUBLIC FACEBOOK ----------------------------------------")
+    webbrowser.open_new("https://facebook.com/public/" + input_search)
+    print("------------------------------------- GITHUB SEARCH -------------------------------------")
+    webbrowser.open_new("https://github.com/search?q=" + input_search)
+
 
 else:
     pass
