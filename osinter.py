@@ -73,8 +73,6 @@ print(responsepdnsreverse)
 
 """
 #ZOOMEYE
-
-
 >>> dir(zoomeye)
 ['ZoomEye', '__builtins__', '__doc__', '__file__', '__name__', '__package__', 'getpass', 'requests', 'show_ip_port', 'show_site_ip', 'zoomeye_api_test']
 >>> zm = zoomeye.ZoomEye()
@@ -85,8 +83,6 @@ print(responsepdnsreverse)
 >>> zm.search('apache country:cn')
 >>> data = zm.dork_search('apache country:cn')
 >>> zoomeye.show_site_ip(data)
-
-
 """
 
 
@@ -107,21 +103,14 @@ except:
 print("----------------------------- LINKEDIN DATA ---------------------------------")
 """
 LINKEDIN
-
 authentication = linkedin.LinkedInDeveloperAuthentication(CONSUMER_KEY, CONSUMER_SECRET,
                                                           USER_TOKEN, USER_SECRET,
                                                           RETURN_URL, linkedin.PERMISSIONS.enums.values())
-
 # Pass it in to the app...
-
 application = linkedin.LinkedInApplication(authentication)
-
 # Use the app....
-
 application.get_profile()
-
 GET https://api.linkedin.com/v2/{service}
-
 """
 print("--------------------------------- FACEBOOK DATA ----------------------------")
 token = "EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD"
@@ -140,7 +129,7 @@ g = Github("2db60eef1c76f94005cb204b12207958b71fe3ee ")
 #for repo in g.get_repos():
  #   print(repo.name)
 
-browseropener = input("Do you want to open the browser for the rest of the search engines? (y/n) ")
+browseropener = input("Do you want to open the browser for the rest of the search engines (10)? (y/n) ")
 if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("-------------------------- ZOOMEYE opening browser ------------------------------")
     webbrowser.open_new('https://www.zoomeye.org/searchResult?q=' + input_search)
@@ -162,6 +151,10 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("-------------------------------------- ONYPHE SEARCH ------------------------------------")
     puthere = socket.gethostbyname(str(input_search))
     webbrowser.open_new("https://www.onyphe.io/search/?query=" + puthere)
+    print("----------------------------- RIPE NETWORK COORDINATION CENTER ACTIVITY ---------------------------------")
+    webbrowser.open_new("https://stat.ripe.net/" + input_search + "#tabId=activity")
+    print("------------------------------ RIPE NETWORK COORDINATION CENTER DNS -------------------------------------")
+    webbrowser.open_new("https://stat.ripe.net/" + input_search + "#tabId=dns")
 
 
 else:
@@ -176,7 +169,6 @@ pastebin
 tello
 bgp
 arin
-
 viz.graynoise.io/table
 fofa.so
 onyphe.io
@@ -185,4 +177,3 @@ hunter.io
 wigle.net
 ghostproject.fr
 """
-
