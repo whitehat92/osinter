@@ -129,7 +129,7 @@ g = Github("2db60eef1c76f94005cb204b12207958b71fe3ee ")
 #for repo in g.get_repos():
  #   print(repo.name)
 
-browseropener = input("Do you want to open the browser for the rest of the search engines (10)? (y/n) ")
+browseropener = input("Do you want to open the browser for the rest of the search engines (11)? (y/n) ")
 if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("-------------------------- ZOOMEYE opening browser ------------------------------")
     webbrowser.open_new('https://www.zoomeye.org/searchResult?q=' + input_search)
@@ -155,7 +155,10 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     webbrowser.open_new("https://stat.ripe.net/" + input_search + "#tabId=activity")
     print("------------------------------ RIPE NETWORK COORDINATION CENTER DNS -------------------------------------")
     webbrowser.open_new("https://stat.ripe.net/" + input_search + "#tabId=dns")
-
+    print("------------------------------- SOCIAL SEARCHER -----------------------------------------")
+    webbrowser.open_new("https://www.social-searcher.com/social-buzz/?wblng=&ntw=&psttyp=&searchid=&period=&value=&fbpage=&q5=" + input_search)
+    print("----------------------------- CERTIFICATES SEARCH -------------------------------")
+    webbrowser.open_new("https://crt.sh/?q=" + input_search)
 
 else:
     pass
