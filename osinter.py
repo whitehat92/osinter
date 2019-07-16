@@ -149,8 +149,11 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("------------------------------------- GITHUB SEARCH -------------------------------------")
     webbrowser.open_new("https://github.com/search?q=" + input_search)
     print("-------------------------------------- ONYPHE SEARCH ------------------------------------")
-    puthere = socket.gethostbyname(str(input_search))
-    webbrowser.open_new("https://www.onyphe.io/search/?query=" + puthere)
+    try:
+        puthere = socket.gethostbyname(str(input_search))
+        webbrowser.open_new("https://www.onyphe.io/search/?query=" + puthere)
+    except:
+        pass
     print("----------------------------- RIPE NETWORK COORDINATION CENTER ACTIVITY ---------------------------------")
     webbrowser.open_new("https://stat.ripe.net/" + input_search + "#tabId=activity")
     print("------------------------------ RIPE NETWORK COORDINATION CENTER DNS -------------------------------------")
@@ -179,4 +182,12 @@ app.binaryedge.io
 hunter.io
 wigle.net
 ghostproject.fr
+certdb.com
+developers.facebook.com/tools/ct/
+virustotal.com/#/home/search
+viewdnsinfo
+certificate-transparency.org
+google.com/transparencyreport/https/ct
+certspotter - tool in python for the same thing about certificates
+certdb.com
 """
