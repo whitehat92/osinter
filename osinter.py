@@ -12,11 +12,23 @@ import os
 from github import Github
 import socket
 from pybinaryedge import BinaryEdge
+from re import findall
+from requests import get
+from re import search
 
 
 
 
 input_search = input("What do you want to search? ")
+ip = get('https://api.ipify.org').text
+geolocation = get("https://geo.ipify.org/api/v1?apiKey=&ipAddress=" + ip).text
+
+geolocationip = urllib.request.urlopen("https://geoip-db.com/jsonp/" + input_search)
+data = geolocationip.read().decode()
+data = data.split("(")[1].strip(")")
+
+
+print("Please bear in mind that now your Public IP is " + ip + " " + ", located in " + "\n" + data)
 
 # Search Shodan
 api_key = "YFJ1LyOqk5KEAvxIiulVBOoPqbVMFHR5"
@@ -47,6 +59,21 @@ UID = "8d439ff9-7b2c-46cc-af3b-350a0077a15f"
 SECRET = "ySzM6ohyVtXcFRpcXopbdDGs9S3q3tkJ"
 
 print("--------------------------------| CENSYS RESULTS |--------------------------------------")
+raw_response_ip = socket.gethostbyname(input_search)
+raw_response = get('https://censys.io/ipv4/' + raw_response_ip + '/raw').text
+printavel = raw_response.replace('&#34;', '"')
+print(printavel)
+#if "404" in raw_response:
+ #   raw_response_ip = socket.gethostbyname(input_search)
+  #  raw_responsenew = get('https://censys.io/ipv4/' + raw_response_ip + '/raw').text
+   # print(raw_responsenew)
+#else:
+ #   print(raw_response)
+#legit_response = raw_response.replace('&#34;', '"')
+#response = legit_response.split('<code class="json">')[1].split('</code>')[0]
+#sys.stdout.write(response + '\n')
+
+"""
 res = requests.get(API_URL + "/" + str(input_search), auth=(UID, SECRET))
 if res.status_code != 200:
     try:
@@ -54,7 +81,7 @@ if res.status_code != 200:
             print(series["name"], "was last updated at", series["latest_result"]["timestamp"])
     except:
         pass
-
+"""
 print("----------------------------------| ROBTEX RESULTS |----------------------------------")
 print("'''''''''''printing pdns forward results...''''''''''''''''")
 response = robtex_python.pdns_forward(input_search)
@@ -129,6 +156,53 @@ g = Github("2db60eef1c76f94005cb204b12207958b71fe3ee ")
 #for repo in g.get_repos():
  #   print(repo.name)
 
+print("---- REVERSE IP LOOKUP OF YOUR SEARCH")
+#print("This one was not properly tested. If nothing shows up, change something....")
+lookup = 'https://api.hackertarget.com/reverseiplookup/?q=' + input_search
+result = get(lookup).text
+print(result)
+
+
+print("-------------- NAME SERVER LOOKUP -------------------------- ")
+#print("This one was not properly tested. If nothing shows up, change something....")
+result = get('http://api.hackertarget.com/dnslookup/?q=' + input_search).text
+print(result)
+print("--------------------------------- LET'S NOW FIND OUT WHICH TECHNOLOGIES WE ARE TALKING ABOUT -----------------------")
+#print("This one was not properly tested. If nothing shows up, change something....")
+data = get('https://api.wappalyzer.com/lookup-basic/beta/?url=' + input_search).text
+jsoned_data = json.loads(data)
+technologies = []
+print(jsoned_data)
+"""
+for one in jsoned_data:
+        technologies.append(one(int('name')))
+for tech in technologies:
+        print(tech)
+"""
+
+print("----------------- NOW IF THIS FUCKER IS USING A CMS, LET'S FIND OUT ------------------------")
+#print("This one was not properly tested. If nothing shows up, change something....")
+
+response = get('https://whatcms.org/?gpreq=json&jsoncallback=jQuery1124008091494457806547_1554361369057&s=%s&na=&nb=1cg805dlm7d7e5eickf67rzxrn12mju6bnch3a99hrt88v7n8rhf0lovwr8d0zm1&verified=&_=1554361369059' + input_search).text
+match = search(r'uses<\\/div>[^>]+>(.*?)<\\/a>', response)
+print(match)
+#print(good + ' ' + match.group(1) + '\n')
+#print('Target doesn\'t seem to use a CMS' + '\n')
+
+
+print("------------------------------ SUBDOMAINS FOUND --------------------------------")
+#print("This one was not properly tested. If nothing shows up, change something....")
+response = get('https://findsubdomains.com/subdomains-of/' + input_search).text
+print(response)
+matches = findall(r'(?s)<div class="domains js-domain-name">(.*?)</div>', response)
+for match in matches:
+    cleanresponse = match.replace(' ', '').replace('\n', '') + '\n'
+    print(cleanresponse)
+
+print("------------------- MORE DNS STUFF ----------------------------")
+originalrequest = get("https://tools.dnsstuff.com/#dnsReport|type=domain&&value=" + input_search).text
+print(originalrequest)
+
 browseropener = input("Do you want to open the browser for the rest of the search engines (11)? (y/n) ")
 if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("-------------------------- ZOOMEYE opening browser ------------------------------")
@@ -162,9 +236,15 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     webbrowser.open_new("https://www.social-searcher.com/social-buzz/?wblng=&ntw=&psttyp=&searchid=&period=&value=&fbpage=&q5=" + input_search)
     print("----------------------------- CERTIFICATES SEARCH -------------------------------")
     webbrowser.open_new("https://crt.sh/?q=" + input_search)
-
+    print("-------------------- CERTIFICATES TRANSPARENCY BY GOOGLE ----------------------------")
+    webbrowser.open_new("https://developers.facebook.com/tools/ct/" + input_search)
+    print("---------------------------- CERTIFICATES DB -------------------------------------")
+    webbrowser.open_new("https://certdb.com/search/index?q=domain%3A%22" + input_search + "%22")
+    print("---------------------------- VIEWDNS-INFO ---------------------------------------------")
+    webbrowser.open_new("https://viewdns.info/dnsreport/?domain=" + input_search)
 else:
     pass
+
 """
 --- Services
 SYNC ME
@@ -190,4 +270,5 @@ certificate-transparency.org
 google.com/transparencyreport/https/ct
 certspotter - tool in python for the same thing about certificates
 certdb.com
+"https://tools.dnsstuff.com/#dnsReport|type=domain&&value="+str(que))
 """
