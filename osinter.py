@@ -59,10 +59,14 @@ UID = "8d439ff9-7b2c-46cc-af3b-350a0077a15f"
 SECRET = "ySzM6ohyVtXcFRpcXopbdDGs9S3q3tkJ"
 
 print("--------------------------------| CENSYS RESULTS |--------------------------------------")
-raw_response_ip = socket.gethostbyname(input_search)
-raw_response = get('https://censys.io/ipv4/' + raw_response_ip + '/raw').text
-printavel = raw_response.replace('&#34;', '"')
-print(printavel)
+try:
+    raw_response_ip = socket.gethostbyname(input_search)
+    raw_response = get('https://censys.io/ipv4/' + raw_response_ip + '/raw').text
+    printavel = raw_response.replace('&#34;', '"')
+    print(printavel)
+except:
+    pass
+
 #if "404" in raw_response:
  #   raw_response_ip = socket.gethostbyname(input_search)
   #  raw_responsenew = get('https://censys.io/ipv4/' + raw_response_ip + '/raw').text
@@ -202,6 +206,44 @@ for match in matches:
 print("------------------- MORE DNS STUFF ----------------------------")
 originalrequest = get("https://tools.dnsstuff.com/#dnsReport|type=domain&&value=" + input_search).text
 print(originalrequest)
+
+#GOOGLE
+"""
+google = "https://www.google.com/search?filter=0&q=site:" + input_search
+getrequrl = "https://www.google.com/search?filter=0&num=100&q=" + input_search + "&start="
+req = urllib2.Request(getrequrl)
+    response = urllib2.urlopen(req)
+    data = response.read()
+    data = re.sub('<b>', '', data)
+    for e in ('>', '=', '<', '\\', '(', ')', '"', 'http', ':', '//'):
+        data = string.replace(data, e, ' ')
+
+    r1 = re.compile('[-_.a-zA-Z0-9.-_]*' + '\.' + ext)
+    res = r1.findall(data)
+    return res
+
+def main(domain):
+    list_ext = {"pdf": [], "xls": [], "docx": []}
+    for x in list_ext:
+        query = "site:%s+filetype:%s" % (domain, x)
+        results = googlesearch(query, x)
+        list_ext[x] = results
+    return list_ext
+
+
+def output(data, domain=""):
+    for key, results in data.iteritems():
+        if results:
+            results = set(results)
+            for x in results:
+                x = re.sub('<li class="first">', '', x)
+                x = re.sub('</li>', '', x)
+                print x    
+
+    
+    
+    """
+
 
 browseropener = input("Do you want to open the browser for the rest of the search engines (11)? (y/n) ")
 if browseropener == "y" or browseropener == "Y" or browseropener == "":
