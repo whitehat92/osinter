@@ -173,6 +173,8 @@ result = get('http://api.hackertarget.com/dnslookup/?q=' + input_search).text
 print(result)
 print("--------------------------------- LET'S NOW FIND OUT WHICH TECHNOLOGIES WE ARE TALKING ABOUT -----------------------")
 #print("This one was not properly tested. If nothing shows up, change something....")
+if "https" in input_search:
+    input_search.replace("https://", "")
 data = get('https://api.wappalyzer.com/lookup-basic/beta/?url=' + input_search).text
 jsoned_data = json.loads(data)
 technologies = []
