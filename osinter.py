@@ -141,18 +141,22 @@ authentication = linkedin.LinkedInDeveloperAuthentication(CONSUMER_KEY, CONSUMER
 application = linkedin.LinkedInApplication(authentication)
 # Use the app....
 application.get_profile()
-GET https://api.linkedin.com/v2/{service}
+GET https://api.linkedin.com/v2/{input_search}
 """
 print("--------------------------------- FACEBOOK DATA ----------------------------")
 token = "EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD"
 fb_request_private = requests.get("https://graph.facebook.com/v2.9/search?q=" + input_search + "&type=user&access_token=" + token)
 print(fb_request_private)
+print("--------- PRINTING DATA FROM FACEBOOK PUBLICALLY ---------------------------")
 fb_request_public = requests.get("https://facebook.com/public/" + input_search)
 print(fb_request_public.headers)
 fb_just_me = requests.get("https://graph.facebook.com/v3.3/me?fields=id%2Cname%2Cphotos&access_token=EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD").text
 fb_just_me
-fb_searchbycurl = os.system("C:/Users/Antonio/Desktop/curl/curl.exe -X GET" + " " + "https://graph.facebook.com/v3.3/me?fields=id%2Cname%2Cphotos&access_token=EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD")
-fb_searchbycurl
+try:
+    fb_searchbycurl = os.system("C:/Users/Antonio/Desktop/curl/curl.exe -X GET" + " " + "https://graph.facebook.com/v3.3/me?fields=id%2Cname%2Cphotos&access_token=EAAEnQV7kXCcBAEbMc436liLoF3NqqOXQK3faaIZC4lZBtqeTYUoZCvvRQBVibeJ5WjUAWCdhlO36jAD52dOAyN4WvmM1X0jLrR4wXD9WuS6EecJQJajykIOTrzPxLItXgZADUKab4tAHAm5fZAA7BJ321s5mA8dBF5xz9QLIpmZBC2GFGvp4xuvqZAU7LTldxBRNM0yPuOSsQZDZD")
+    fb_searchbycurl
+except:
+    pass
 
 print("-------------------------------------- GITHUB API ---------------------------------")
 g = Github("2db60eef1c76f94005cb204b12207958b71fe3ee ")
@@ -209,20 +213,19 @@ print("------------------- MORE DNS STUFF ----------------------------")
 originalrequest = get("https://tools.dnsstuff.com/#dnsReport|type=domain&&value=" + input_search).text
 print(originalrequest)
 
+print("--------------- Exploring Google World -------------------------")
 #GOOGLE
-"""
 google = "https://www.google.com/search?filter=0&q=site:" + input_search
 getrequrl = "https://www.google.com/search?filter=0&num=100&q=" + input_search + "&start="
-req = urllib2.Request(getrequrl)
-    response = urllib2.urlopen(req)
-    data = response.read()
-    data = re.sub('<b>', '', data)
-    for e in ('>', '=', '<', '\\', '(', ')', '"', 'http', ':', '//'):
-        data = string.replace(data, e, ' ')
-
+req = requests.request(getrequrl)
+response = urllib3.requests(req)
+data = response.read()
+data = re.sub('<b>', '', data)
+for e in ('>', '=', '<', '\\', '(', ')', '"', 'http', ':', '//'):
+    data = string.replace(data, e, ' ')
     r1 = re.compile('[-_.a-zA-Z0-9.-_]*' + '\.' + ext)
     res = r1.findall(data)
-    return res
+    print(res)
 
 def main(domain):
     list_ext = {"pdf": [], "xls": [], "docx": []}
@@ -230,9 +233,7 @@ def main(domain):
         query = "site:%s+filetype:%s" % (domain, x)
         results = googlesearch(query, x)
         list_ext[x] = results
-    return list_ext
-
-
+        return list_ext
 def output(data, domain=""):
     for key, results in data.iteritems():
         if results:
@@ -240,11 +241,10 @@ def output(data, domain=""):
             for x in results:
                 x = re.sub('<li class="first">', '', x)
                 x = re.sub('</li>', '', x)
-                print x    
+                print(x)
 
-    
-    
-    """
+print("--------------------- BING IS ALSO COMING TO THE PARTY ----------------------")
+print("------------------------- DUCKDUCKGO WILL ALWAYS HAVE ITS PLACE AS WELL -----------------------")
 
 
 browseropener = input("Do you want to open the browser for the rest of the search engines (11)? (y/n) ")
