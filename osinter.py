@@ -15,7 +15,7 @@ from pybinaryedge import BinaryEdge
 from re import findall
 from requests import get
 from re import search
-
+import urllib.request
 
 
 
@@ -204,22 +204,30 @@ print("------------------------------ SUBDOMAINS FOUND -------------------------
 #print("This one was not properly tested. If nothing shows up, change something....")
 response = get('https://findsubdomains.com/subdomains-of/' + input_search).text
 print(response)
+response = response.encode("utf-8")
+sauce = urllib.request.urlopen("http://" + response + "/").read()
+req = urllib.request.urlopen(sauce, timeout=2000)
+soup = bs.BeautifulSoup(sauce, "lxml")
+domaininfo = soup.find(div, class_="c-box")
+print(domaininfo)
+subdomains = soup.find_all(id="subdomains-result-list")
+print(subdomains)
+
+"""
 matches = findall(r'(?s)<div class="domains js-domain-name">(.*?)</div>', response)
 for match in matches:
     cleanresponse = match.replace(' ', '').replace('\n', '') + '\n'
     print(cleanresponse)
+"""
 
-print("------------------- MORE DNS STUFF ----------------------------")
-originalrequest = get("https://tools.dnsstuff.com/#dnsReport|type=domain&&value=" + input_search).text
-print(originalrequest)
-
-print("--------------- Exploring Google World -------------------------")
+print("--------------- Exploring Google World ------------------------- still trying")
 #GOOGLE
-google = "https://www.google.com/search?filter=0&q=site:" + input_search
-getrequrl = "https://www.google.com/search?filter=0&num=100&q=" + input_search + "&start="
-req = requests.request(getrequrl)
-response = urllib3.requests(req)
-data = response.read()
+try:
+    req = urllib.request.Request("https://www.google.com/search?ei=kho6XZakEY2xULj4uvAE&q=" + input_search + "&oq=" + input_search + "&gs_l=psy-ab.3...24584.26899..27013...0.0..0.0.0.......0....1..gws-wiz.....0..0i71.99Zu33H4yCI&ved=0ahUKEwiWtcq__dDjAhWNGBQKHTi8Dk4Q4dUDCAo&uact=5", method='get')
+    response = urllib.request.urlopen(req)
+except:
+    pass
+"""
 data = re.sub('<b>', '', data)
 for e in ('>', '=', '<', '\\', '(', ')', '"', 'http', ':', '//'):
     data = string.replace(data, e, ' ')
@@ -242,7 +250,7 @@ def output(data, domain=""):
                 x = re.sub('<li class="first">', '', x)
                 x = re.sub('</li>', '', x)
                 print(x)
-
+"""
 print("--------------------- BING IS ALSO COMING TO THE PARTY ----------------------")
 print("------------------------- DUCKDUCKGO WILL ALWAYS HAVE ITS PLACE AS WELL -----------------------")
 
@@ -286,6 +294,8 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     webbrowser.open_new("https://certdb.com/search/index?q=domain%3A%22" + input_search + "%22")
     print("---------------------------- VIEWDNS-INFO ---------------------------------------------")
     webbrowser.open_new("https://viewdns.info/dnsreport/?domain=" + input_search)
+    print("----------------------------------- DNS STUFF TOOLS -------------------------------")
+    webbrowser.open_new("https://tools.dnsstuff.com/#dnsReport|type=domain&&value=" + input_search)
 else:
     pass
 
