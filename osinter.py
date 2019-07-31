@@ -3,7 +3,7 @@ import sys
 import json
 import requests
 import censys.certificates
-#import zoomeye
+import zoomeye
 import robtex_python
 import linkedin
 import urllib
@@ -11,7 +11,6 @@ import webbrowser
 import os
 from github import Github
 import socket
-from pybinaryedge import BinaryEdge
 from re import findall
 from requests import get
 from re import search
@@ -43,15 +42,6 @@ for result in results['matches']:
     print(result['data'])
     print('')
 
-print("--------------------------------- BINARY EDGE SEARCH RESULTS ||||||||| NEED TOKEN FIRST ------------------------------------------")
-
-
-#be = BinaryEdge(API_KEY)
-# Iterate over the first page of IPs having specific ssh configuration
-#search = 'ssh.algorithms.encryption.keyword:"aes256-cbc" ssh.banner.keyword:"SSH-2.0-OpenSSH_LeadSec"'
-#results = be.host_search(search)
-#for ip in results['events']:
- #   print("%s" %(ip['target']['ip']))
 
     #CENSYS
 API_URL = "https://censys.io/api/v1"
@@ -67,16 +57,6 @@ try:
 except:
     pass
 
-#if "404" in raw_response:
- #   raw_response_ip = socket.gethostbyname(input_search)
-  #  raw_responsenew = get('https://censys.io/ipv4/' + raw_response_ip + '/raw').text
-   # print(raw_responsenew)
-#else:
- #   print(raw_response)
-#legit_response = raw_response.replace('&#34;', '"')
-#response = legit_response.split('<code class="json">')[1].split('</code>')[0]
-#sys.stdout.write(response + '\n')
-
 """
 res = requests.get(API_URL + "/" + str(input_search), auth=(UID, SECRET))
 if res.status_code != 200:
@@ -87,34 +67,31 @@ if res.status_code != 200:
         pass
 """
 print("----------------------------------| ROBTEX RESULTS |----------------------------------")
-print("'''''''''''printing pdns forward results...''''''''''''''''")
+print("printing pdns (PowerDNS |-| A CACHING DNS PROXY SERVER) forward results...")
 response = robtex_python.pdns_forward(input_search)
 print(response)
 print("''''''''''printing IP of the search'''''''''''")
 responseip = robtex_python.ip_query(input_search)
 print(responseip)
-print("''''''''''printing AS of the search'''''''''''")
+print("''''''''''printing the Autonomous System (routable network within Public Internet) of the search'''''''''''")
 responseas = robtex_python.as_query(input_search)
 print(responseas)
-print("''''''''''printing PDNS REVERSE of the search'''''''''''")
+print("''''''''''printing REVERSE PDNS of the search'''''''''''")
 responsepdnsreverse = robtex_python.pdns_reverse(input_search)
 print(responsepdnsreverse)
 
 
 
-"""
+print("ZOOMEYE RESULTS")
 #ZOOMEYE
->>> dir(zoomeye)
-['ZoomEye', '__builtins__', '__doc__', '__file__', '__name__', '__package__', 'getpass', 'requests', 'show_ip_port', 'show_site_ip', 'zoomeye_api_test']
->>> zm = zoomeye.ZoomEye()
->>> zm.username = 'username@zoomeye.org'
->>> zm.password = 'password'
->>> print(zm.login())
-....JIUzI1NiIsInR5cCI6IkpXVCJ9.....
->>> zm.search('apache country:cn')
->>> data = zm.dork_search('apache country:cn')
->>> zoomeye.show_site_ip(data)
-"""
+#my access token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGl0eSI6InplX2NvcnJlaWE5M0Bob3RtYWlsLmNvbSIsImlhdCI6MTU2NDI1MzU0MywibmJmIjoxNTY0MjUzNTQzLCJleHAiOjE1NjQyOTY3NDN9.Ghw8moQfhR0qzMMv4U8-prGrOImQ6i7vjtUkqzh_r28"
+#['ZoomEye', '__builtins__', '__doc__', '__file__', '__name__', '__package__', 'getpass', 'requests', 'show_ip_port', 'show_site_ip', 'zoomeye_api_test']
+#zm = zoomeye.ZoomEye()
+#print(zm)
+#zm.login()
+#zm.dork_search(input_search)
+#zm.search('apache country:cn')
+#data = zm.dork_search('apache country:cn')
 
 
 #FULL CONTACT
@@ -204,14 +181,6 @@ print("------------------------------ SUBDOMAINS FOUND -------------------------
 #print("This one was not properly tested. If nothing shows up, change something....")
 response = get('https://findsubdomains.com/subdomains-of/' + input_search).text
 print(response)
-response = response.encode("utf-8")
-sauce = urllib.request.urlopen("http://" + response + "/").read()
-req = urllib.request.urlopen(sauce, timeout=2000)
-soup = bs.BeautifulSoup(sauce, "lxml")
-domaininfo = soup.find(div, class_="c-box")
-print(domaininfo)
-subdomains = soup.find_all(id="subdomains-result-list")
-print(subdomains)
 
 """
 matches = findall(r'(?s)<div class="domains js-domain-name">(.*?)</div>', response)
@@ -223,40 +192,37 @@ for match in matches:
 print("--------------- Exploring Google World ------------------------- still trying")
 #GOOGLE
 try:
-    req = urllib.request.Request("https://www.google.com/search?ei=kho6XZakEY2xULj4uvAE&q=" + input_search + "&oq=" + input_search + "&gs_l=psy-ab.3...24584.26899..27013...0.0..0.0.0.......0....1..gws-wiz.....0..0i71.99Zu33H4yCI&ved=0ahUKEwiWtcq__dDjAhWNGBQKHTi8Dk4Q4dUDCAo&uact=5", method='get')
-    response = urllib.request.urlopen(req)
+    req = urllib.request.Request("https://www.google.com/search?ei=kho6XZakEY2xULj4uvAE&q=" + input_search + "&oq=" + input_search + "&gs_l=psy-ab.3...24584.26899..27013...0.0..0.0.0.......0....1..gws-wiz.....0..0i71.99Zu33H4yCI&ved=0ahUKEwiWtcq__dDjAhWNGBQKHTi8Dk4Q4dUDCAo&uact=5")
+    print(req)
 except:
     pass
-"""
-data = re.sub('<b>', '', data)
-for e in ('>', '=', '<', '\\', '(', ')', '"', 'http', ':', '//'):
-    data = string.replace(data, e, ' ')
-    r1 = re.compile('[-_.a-zA-Z0-9.-_]*' + '\.' + ext)
-    res = r1.findall(data)
-    print(res)
 
-def main(domain):
-    list_ext = {"pdf": [], "xls": [], "docx": []}
-    for x in list_ext:
-        query = "site:%s+filetype:%s" % (domain, x)
-        results = googlesearch(query, x)
-        list_ext[x] = results
-        return list_ext
-def output(data, domain=""):
-    for key, results in data.iteritems():
-        if results:
-            results = set(results)
-            for x in results:
-                x = re.sub('<li class="first">', '', x)
-                x = re.sub('</li>', '', x)
-                print(x)
-"""
-print("--------------------- BING IS ALSO COMING TO THE PARTY ----------------------")
-print("------------------------- DUCKDUCKGO WILL ALWAYS HAVE ITS PLACE AS WELL -----------------------")
+google_dorks = input("Do you want to use Google dorks? ")
+if google_dorks == "" or google_dorks == "y" or google_dorks == "Y":
+    printlist = input("Do you know which parameters are available? ")
+    if printlist == "y" or printlist == "Y" or printlist == "":
+        yesdorks = input("Please specify your query: ")
+    else:
+        print("Here are the basic parameters:")
+        print("allintext: searches for specific text contained on any web page")
+        print("allinurl: it can be used to fetch results whose URL contains all the specified characters")
+        print("allintitle: exactly the same as allintext, but will show pages that contain titles with X characters")
+        print("filetype")
+        print("intitle: used to search for various keywords inside the title")
+        print("intext: useful to locate pages that contain certain characters or strings inside their text")
+    definitivedorks = input("So.. build now your query: ")
+    webbrowser.open_new("https://www.google.com/search?q=" + definitivedorks)
 
 
-browseropener = input("Do you want to open the browser for the rest of the search engines (11)? (y/n) ")
+
+browseropener = input("Do you want to open the browser for the rest of the search engines (22)? (y/n) ")
 if browseropener == "y" or browseropener == "Y" or browseropener == "":
+    print("--------------------- BING  ----------------------")
+    webbrowser.open_new("https://www.bing.com/search?q=antonio-correia.com&qs=n&form=QBLH&sp=-1&pq=" + input_search + ".co&sc=0-18&sk=&cvid=855BB34029354D538EC5F30BF05675CA")
+    print("------------------------- DUCKDUCKGO  -----------------------")
+    webbrowser.open_new("https://duckduckgo.com/?q=" + input_search + "&t=h_&ia=web")
+    print("--------------------- GOOGLE ----------------------")
+    webbrowser.open_new("https://www.google.com/search?ei=kho6XZakEY2xULj4uvAE&q=" + input_search + "&oq=" + input_search + "&gs_l=psy-ab.3...24584.26899..27013...0.0..0.0.0.......0....1..gws-wiz.....0..0i71.99Zu33H4yCI&ved=0ahUKEwiWtcq__dDjAhWNGBQKHTi8Dk4Q4dUDCAo&uact=5")
     print("-------------------------- ZOOMEYE opening browser ------------------------------")
     webbrowser.open_new('https://www.zoomeye.org/searchResult?q=' + input_search)
     print(
@@ -296,6 +262,8 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     webbrowser.open_new("https://viewdns.info/dnsreport/?domain=" + input_search)
     print("----------------------------------- DNS STUFF TOOLS -------------------------------")
     webbrowser.open_new("https://tools.dnsstuff.com/#dnsReport|type=domain&&value=" + input_search)
+    print("------------------ WAYBACK MACHINE -------------------------------------")
+    webbrowser.open_new("https://web.archive.org/details/" + input_search)
 else:
     pass
 
