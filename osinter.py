@@ -266,7 +266,7 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("------------------ WAYBACK MACHINE -------------------------------------")
     webbrowser.open_new("https://web.archive.org/details/" + input_search)
     print("--------------------- IPV4INFO ----------------------------")
-    webbrowser.open_new("http://ipv4info.com/?act=check&ip=" + input_search)
+    webbrowser.open_new("https://" + input_search + "websiteoutlook.com/")
 else:
     pass
 
