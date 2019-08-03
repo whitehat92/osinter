@@ -265,6 +265,8 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     webbrowser.open_new("https://tools.dnsstuff.com/#dnsReport|type=domain&&value=" + input_search)
     print("------------------ WAYBACK MACHINE -------------------------------------")
     webbrowser.open_new("https://web.archive.org/details/" + input_search)
+    print("--------------------- IPV4INFO ----------------------------")
+    webbrowser.open_new("http://ipv4info.com/?act=check&ip=" + input_search)
 else:
     pass
 
