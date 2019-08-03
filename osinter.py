@@ -210,6 +210,7 @@ if google_dorks == "" or google_dorks == "y" or google_dorks == "Y":
         print("filetype")
         print("intitle: used to search for various keywords inside the title")
         print("intext: useful to locate pages that contain certain characters or strings inside their text")
+        print("ext: type of extension who you want to include in your search")
     definitivedorks = input("So.. build now your query: ")
     webbrowser.open_new("https://www.google.com/search?q=" + definitivedorks)
 
