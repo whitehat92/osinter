@@ -216,7 +216,7 @@ if google_dorks == "" or google_dorks == "y" or google_dorks == "Y":
 
 
 
-browseropener = input("Do you want to open the browser for the rest of the search engines (22)? (y/n) ")
+browseropener = input("Do you want to open the browser for the rest of the search engines (25)? (y/n) ")
 if browseropener == "y" or browseropener == "Y" or browseropener == "":
     print("--------------------- BING  ----------------------")
     webbrowser.open_new("https://www.bing.com/search?q=antonio-correia.com&qs=n&form=QBLH&sp=-1&pq=" + input_search + ".co&sc=0-18&sk=&cvid=855BB34029354D538EC5F30BF05675CA")
@@ -267,6 +267,11 @@ if browseropener == "y" or browseropener == "Y" or browseropener == "":
     webbrowser.open_new("https://web.archive.org/details/" + input_search)
     print("--------------------- IPV4INFO ----------------------------")
     webbrowser.open_new("https://" + input_search + "websiteoutlook.com/")
+    print("------------------------- CERTSPOTTER ---------------------------------")
+    webbrowser.open_new("https://certspotter.com/api/v0/certs\?domain\=" + input_search)
+    print("------------------------ CRTSH -------------------------------------------")
+    webbrowser.open_new("https://certspotter.com/api/v0/certs\?domain\=" + input_search)
+
 else:
     pass
 
@@ -296,4 +301,46 @@ google.com/transparencyreport/https/ct
 certspotter - tool in python for the same thing about certificates
 certdb.com
 "https://tools.dnsstuff.com/#dnsReport|type=domain&&value="+str(que))
+asnlookup to look for ip zones. A company always has a set of IP's assigned. in order to look for the zones associated with those
+IP's, one should look for the ASN to find out exactly to which location or zone that IP belongs to.
+
+databreaches.net
+https://www.searchencrypt.com/
+europeliveuamap.com - base de dados espacial. entrar por liveuamap.com e escolher o país, senao somos barrados pela membership
+https://nuclearsecrecy.com/nukemap/
+https://www.n2yo.com/
+https://wifispc.com/
+freekeywordresearch.com
+keyworddiscovery.com
+https://www.bincodes.com/bin-search/ --> procurar os bins ou identificadores bancários
+pic2map.com
+https://www.pic2map.com/
+https://wigle.net/
+archive.is
+waybackmachine
+https://www.boatinfoworld.com/
+http://www.internationalcrimesdatabase.org/
+vat-lookup.co.uk
+https://bitcoinwhoswho.com/
+https://www.dgmarket.com/ --> concursos públicos, em portugal é o portalbase
+https://www.commercial-register.sg.ch/ --> registars das empresas
+https://pt.kompass.com/ 
+https://knowem.com/ --> procurar pessoas, pipl.com também
+start.me
+https://start.me/p/VRxaj5/dating-apps-and-hook-up-sites-for-investigators --> agregador de várias redes de dating
+http://irc.netsplit.de/channels/ --> procurar no irc pelo tema desejado
+http://searchlr.net/ --> tumblr search engine
+resavr.com --> reddit search, coisas que foram apagadas
+https://codeofaninja.com/tools/find-instagram-user-id --> procurar pelo id do user
+http://www.geocreepy.com/
+https://iotscanner.bullguard.com/
+https://millionshort.com/ --> procurar resultados que estão na 15ªa página
+similarsites.com
+https://www.searchftps.net/
+etools.ch --> metasearc
 """
+
+
+#error handling
+#Exception, <variablename_toexpress the error:
+#print(str(variablename_toexpress the error)
