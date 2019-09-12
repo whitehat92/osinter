@@ -60,7 +60,7 @@ for resultshodan in shody:
 
     #CENSYS
 API_URL = "https://censys.io/api/v1"
-UID = "8d439ff9-7b2c-46cc-af3b-350a0077a15f"
+UID = ""
 SECRET = "KEY"
 
 print("--------------------------------| CENSYS RESULTS |--------------------------------------")
